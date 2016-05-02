@@ -1,0 +1,26 @@
+{
+  "name": "hpr_sports",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "crumb": "^6.0.0",
+    "hapi": "^13.3.0",
+    "hapi-auth-cookie": "^6.1.1",
+    "hapi-react-views": "^7.0.0",
+    "inert": "^3.2.0",
+    "joi": "^8.0.5",
+    "react": "15.0.2",
+    "react-dom": "15.0.2",
+    "scooter": "^2.0.1",
+    "vision": "^4.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
