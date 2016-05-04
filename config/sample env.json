@@ -1,0 +1,16 @@
+{
+	"ClientID": 123,
+	"ClientSecret":"",
+	"ServerPort": 3000,
+	"ServerHost": "localhost",
+	"DBHost": "localhost",
+	"DBport": 5433,
+	"DB": "sports",
+	"DBuser": "postgres",
+	"DBpassword": "password",
+	"poolSize": 10,
+	"poolIdleTimeout": 30000,
+	"reapIntervalMillis": 1000,
+	"ssl": false,
+	"JWT_SECRET":"encryption_password_goes_here"
+}

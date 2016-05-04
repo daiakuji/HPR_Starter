@@ -9,13 +9,13 @@ internals.getIndex = function (request, reply) {
 }
 
 internals.getUserList = function (request, reply) {
-	dbConn.db.users.find({}, function (err,res) {
+	dbConn.db.people.find({}, function (err,res) {
 	 reply(res);	
 	});
 }
 
 internals.getUser = function (request, reply) {
-	dbConn.db.users.find({id: request.params.id}, function(err,res){
+	dbConn.db.people.find({id: request.params.id}, function(err,res){
 			reply(res);
 	});
 }
