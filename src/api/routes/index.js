@@ -29,6 +29,22 @@ module.exports = [
         }
     },	
 	{
+        path: '/restricted',
+		method: 'GET', 
+		handler: indexHandler.validateUser,
+		config: { 
+			auth: 'jwt' 
+		}
+	},
+    { // implement your own login/auth function here
+      path: "/auth",
+	  method: ['GET','POST'],  
+	  config: {
+		  auth:false
+	  },
+      handler: indexHandler.authUser	
+	},
+	{
 		path: "/user",
 		method: "GET",
 		handler: indexHandler.getUserList,

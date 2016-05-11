@@ -5,12 +5,8 @@ var path = require('path');
 var P = require('bluebird');
 var Vision = require('vision');
 
-require('babel-core/register')({});
-
 // Export the server
 module.exports = makeServer;
-
-var TWO_WEEKS = 14 * 24 * 60 * 60 * 1000;
 
 // Create the server
 function makeServer() {
@@ -32,10 +28,10 @@ function makeServer() {
 		
 		//Configure http request cache
 		return P.promisify(server.register, {context: server})([require('hapi-auth-jwt2'),require('bell')]).then(function() {
-			var cache = server.cache({
+			/*var cache = server.cache({
 				expiresIn: TWO_WEEKS,
 				segment: '|sessions'
-			});
+			});*/
 
 			//Setup the JSON Web Token Authentication
 			server.auth.strategy('jwt','jwt',true,
@@ -78,7 +74,7 @@ function makeServer() {
 					},
 					compileOptions: {}, // optional
 					relativeTo: __dirname,
-					path: 'views'
+					path: path.join(__dirname, '../views')
 				});
 			});
 
