@@ -5,11 +5,22 @@
  * not been set, (i.e. null), we know the session is valid.
  */
 module.exports = function validate (decoded, request, callback) {
-  
-    // do your checks to see if the person is valid
-	console.log(' - - - - - - - >', request.method);
-	console.log(" - - - - - - - DECODED token:");
-	console.log(decoded);
+	// Check if the JWT is still valid
+	var currentTime = Math.floor((new Date().getTime())/1000);
+	var timeLeft = decoded.exp - currentTime;
 	
-	return callback(null,true);
+	var stillAlive = (decoded.exp>currentTime)
+	
+	
+	// Check if the JWT is still valid
+	if (stillAlive>0) // JWT has not yet expired
+	{
+		//Check the session is still valid in the DB
+		
+		return callback(null,true);	
+	}
+	else
+	{
+		return callback(null,false);
+	}
 };

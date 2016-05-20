@@ -11,6 +11,7 @@ export default React.createClass({
 				<li><NavLink to="/" onlyActiveOnIndex={true}>Home</NavLink></li>
 				<li><NavLink to="/about">About</NavLink></li>
 				<li><NavLink to="/Repos">Repos</NavLink></li>
+				<li><NavLink to="/Counter">Counter</NavLink></li>
 			</ul>
 		</div>
 	)

@@ -9,6 +9,10 @@ import { renderToString } from 'react-dom/server'
 import { match, RouterContext} from 'react-router'
 import routes from './../../common/routes'
 
+//Redux
+import counterApp from './../../common/modules/Count'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 
 // Export the server
 module.exports = makeServer;
@@ -28,6 +32,9 @@ function makeServer() {
 		return P.promisify(server.register, {context: server})(plugins).then(function() {
 			server.route(require('./../routes/index'));
 			server.ext('onPreResponse', (request, reply) => {
+				//Create a new Redux store instance
+				const store = createStore(counterApp)
+				
 				//If the route exists and does not exist in the react-router
 				if (typeof request.response.statusCode !== "undefined") {
 					//Continue to the Hapi Route to server the file
@@ -46,9 +53,16 @@ function makeServer() {
 						  // You can also check renderProps.components or renderProps.routes for
 						  // your "not found" component or route respectively, and send a 404 as
 						  // below, if you're using a catch-all route.
-						const appHtml = renderToString(<RouterContext {...props}/>)
+						const appHtml = renderToString(
+						<Provider store ={store}>
+						<RouterContext {...props}/>
+						</Provider>
+						)
+						
+						console.log(store.getState());
+						const initialState = store.getState()
 					
-						return reply(renderPage(appHtml)).code(200)
+						return reply(renderPage(appHtml, initialState)).code(200)
 					} else {
 						reply('Not found').code(404)
 					}
@@ -62,14 +76,22 @@ function makeServer() {
 		});		
 }
 
-function renderPage(appHtml) {
+function renderPage(appHtml, initialState) {
   return `
     <!doctype html public="storage">
     <html>
     <meta charset=utf-8/>
+	<head>
     <title>My First React Router App</title>
     <link rel=stylesheet href=/style/index.css>
+	</head>
+	<body>
     <div id=app>${appHtml}</div>
+	<script>
+		window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+	</script>
     <script src="/js/client.js"></script>
+	</body>
+	</html>
    `
 }

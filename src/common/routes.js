@@ -6,6 +6,7 @@ import About from './modules/About'
 import Home from './modules/Home'
 import Repos from './modules/Repos'
 import Repo from './modules/Repo'
+import Counter from './modules/CountContainer'
 
 module.exports = (
 {path: '/',
@@ -16,6 +17,7 @@ module.exports = (
 		{path: 'repos', component: Repos,
 		childRoutes: [
 			{path:'repo/:userName/:repoName', component:Repo}
-		]}
+		]},
+		{path: 'counter', component: Counter}
 		]}
 )

@@ -1,5 +1,5 @@
 //Load Modules
-require('env2')('./config/env.json'); 
+require('env2')('./../../config/env.json'); 
 var Hapi = require('hapi');
 var path = require('path');
 var P = require('bluebird');
@@ -20,48 +20,15 @@ function makeServer() {
 			//routes
 		});
 		server.connection({
-			host: process.env.ServerHost || "localhost",
-			port: process.env.ServerPort || 8080
+			host: process.env.APIHost || "localhost",
+			port: process.env.APIPort || 8080
 			});
 		
 		server.stamp = require("./stamp")();
 		
-		//Configure http request cache
-		return P.promisify(server.register, {context: server})([require('hapi-auth-jwt2'),require('bell')]).then(function() {
-			/*var cache = server.cache({
-				expiresIn: TWO_WEEKS,
-				segment: '|sessions'
-			});*/
-
-			//Setup the JSON Web Token Authentication
-			server.auth.strategy('jwt','jwt',true,
-			{
-				key:process.env.JWT_SECRET,
-				validateFunc: require('./jwt2_validate_func'),
-				verifyOptions: { 
-					algorithms: [ 'HS256' ],
-					ignoreExpiration:true 
-					}
-			});
-			
-			 //Setup the social Facebook login strategy
-			server.auth.strategy('facebook', 'bell', {
-				provider: 'facebook',
-				password: process.env.JWT_SECRET, //Use something more secure in production
-				// You'll need to go to https://developers.facebook.com/ and set up a
-				// Website application to get started
-				// Once you create your app, fill out Settings and set the App Domains
-				// Under Settings >> Advanced, set the Valid OAuth redirect URIs to include http://<yourdomain.com>/bell/door
-				// and enable Client OAuth Login
-				clientId: process.env.ClientID,
-				clientSecret: process.env.ClientSecret,
-				isSecure: false, //Should be set to true (which is the default) in production
-				location: server.info.uri
-			});
-		}).then(function() {
-			var plugins = require('./../adapters/plugins');
-		
-			return P.promisify(server.register, {context: server})(plugins).then(function() {
+		var plugins = require('./../adapters/plugins');
+				
+		return P.promisify(server.register, {context: server})(plugins).then(function() {		
 			server.register(Vision, (err) => {
 
 				if (err) {
@@ -79,11 +46,13 @@ function makeServer() {
 			});
 
 			server.route(require('./../routes/index'));
+			server.ext('onPreResponse', (request, reply) => {
+				return reply.continue();
+			});
 		  }).then(function() {
 			return P.promisify(server.start, {context: server})();
 		  }).then(function() {
 			return server;
 		  });
 		});		
-	});
 }

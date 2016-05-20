@@ -24,5 +24,8 @@ module.exports = [
 	}
   },
   require('scooter'),
-  require('inert')
+  require('inert'),
+  require('hapi-auth-jwt2'),
+  require('bell'),
+  require('./auth')
 ];

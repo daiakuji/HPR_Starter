@@ -1,7 +1,6 @@
 var indexHandler = require('./../handlers/index');
 var Joi = require('joi');
 
-
 module.exports = [
 	{
 		path: "/",
@@ -10,24 +9,7 @@ module.exports = [
 			  auth: false 
 		},
 		handler: indexHandler.getIndex
-	},
-   {
-        method: '*',
-        path: '/bell/door',
-        config: {
-            auth: {
-                strategy: 'facebook',
-                mode: 'try'
-            },
-            handler: function (request, reply) {
-
-                if (!request.auth.isAuthenticated) {
-                    return reply('Authentication failed due to: ' + request.auth.error.message);
-                }
-                reply('<pre>' + JSON.stringify(request.auth.credentials, null, 4) + '</pre>');
-            }
-        }
-    },	
+	},		
 	{
         path: '/restricted',
 		method: 'GET', 
@@ -35,15 +17,7 @@ module.exports = [
 		config: { 
 			auth: 'jwt' 
 		}
-	},
-    { // implement your own login/auth function here
-      path: "/auth",
-	  method: ['GET','POST'],  
-	  config: {
-		  auth:false
-	  },
-      handler: indexHandler.authUser	
-	},
+	},	
 	{
 		path: "/user",
 		method: "GET",

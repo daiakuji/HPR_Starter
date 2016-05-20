@@ -38,7 +38,7 @@ npm run start-prod
 
 ```
 .
-├── .babelrc                                    * Babel API configuration file
+├── .babelrc									* Babel API configuration file
 ├── package.json								* Install dependencies, build and run scripts
 ├── bin/										* Webpack output for server code
 ├── config/										* Application configuration file
@@ -67,6 +67,7 @@ npm run start-prod
 
 ## Hapi Server
 There are two servers in this package - one for the API calls to the database (`src/api`) and the other to perform server rendering for the initial load (`src/server`). Both servers have been written with the Hapi Framework.
+
 To start using hapi, simply import or require the hapi package into your script.
 ```
 npm i --S hapi
@@ -76,6 +77,7 @@ var Hapi = require('hapi');
 ```
 
 See [Hapi Server Side Rendering](/docs/HapiSSR.md) for more details on server side rendering.
+
 See [Hapi API](/docs/HAPI.md) for more details on the API.
 
 
@@ -86,6 +88,12 @@ See [React Client](/docs/ReactClient.md) for more details.
 
 ## React Routing
 See the [React Router tutorial](https://github.com/reactjs/react-router-tutorial) for 14 lessons on how to use react-router with react.
+
+## Additional information
+*[React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example)
+*[Hapi React Starter Kit](https://github.com/Dindaleon/hapi-react-starter-kit)
+*[JWT](https://jwt.io/)
+*[Redux ecosystem] (https://medium.com/@denisraslov/the-redux-ecosystem-539c630ec521#.d5yg9tvi4)
 
 ##Todo
 * [ ] Redux implementation
