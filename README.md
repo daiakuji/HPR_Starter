@@ -91,10 +91,10 @@ See the [React Router tutorial](https://github.com/reactjs/react-router-tutorial
 
 ## Additional information
 
-*[React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example)
-*[Hapi React Starter Kit](https://github.com/Dindaleon/hapi-react-starter-kit)
-*[JWT](https://jwt.io/)
-*[Redux ecosystem] (https://medium.com/@denisraslov/the-redux-ecosystem-539c630ec521#.d5yg9tvi4)
+* [React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example)
+* [Hapi React Starter Kit](https://github.com/Dindaleon/hapi-react-starter-kit)
+* [JWT](https://jwt.io/)
+* [Redux ecosystem] (https://medium.com/@denisraslov/the-redux-ecosystem-539c630ec521#.d5yg9tvi4)
 
 ##Todo
 * [ ] Redux implementation

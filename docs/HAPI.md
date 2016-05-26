@@ -7,7 +7,7 @@ It is possible to consolidate both server codes into one, as the server would ma
 ## Structure
 ---
 
-In the ('src\api') folder, the code is split into:
+In the (`src\api`) folder, the code is split into:
 
 * Adapters
 * Handlers
@@ -57,7 +57,7 @@ config: {
 ### Libs
 
 The Lib folder contains utility scripts which can be referenced in routes, server configuration, handlers, etc. 
-In this project, the ('startup.js') exports a function which configures the server connection, plugins and routes. It can also be used to [configure a views engine](http://hapijs.com/tutorials/views) as shown below for hapi-react-views:
+In this project, the (`startup.js`) exports a function which configures the server connection, plugins and routes. It can also be used to [configure a views engine](http://hapijs.com/tutorials/views) as shown below for hapi-react-views:
 
 ```
 server.register(Vision, (err) => {
@@ -136,9 +136,9 @@ For further reading, see: [Hapi Server API documentation](http://hapijs.com/api#
 From the [documentation](http://massive-js.readthedocs.io/en/latest/):
 >Massive is a PostgreSQL-specific data access tool. The goal of Massive is to make it easier for you to use PostgreSQL's amazing features, not to hide them under a load of abstraction.
 
-One method to establish the database connection to be used with the routes, is to create a plugin and register the ('db') variable in the context. To do this, we use ('server.bind()') method before loading the routes to the server object. This can be found in the ('/adapters/db') folder.
+One method to establish the database connection to be used with the routes, is to create a plugin and register the (`db`) variable in the context. To do this, we use (`server.bind()`) method before loading the routes to the server object. This can be found in the (`/adapters/db`) folder.
 
-From there, the routes within the context can reference the ('db') object by simply using ('this.db'). 
+From there, the routes within the context can reference the (`db`) object by simply using (`this.db`). 
 
 ## Authentication
 ---
