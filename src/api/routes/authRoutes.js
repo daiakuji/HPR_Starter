@@ -1,5 +1,5 @@
 //Add all the routes related to Auth Plugin here.
-var Handler = require('./../handlers');
+var Handler = require('./../handlers/authHandler');
 module.exports = [{
     path: "/auth/facebook",
     method: "GET",

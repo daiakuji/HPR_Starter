@@ -1,5 +1,5 @@
 {
-  "name": "hpr_sports",
+  "name": "hpr_starter",
   "version": "1.0.0",
   "main": "server.js",
   "devDependencies": {

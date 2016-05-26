@@ -90,6 +90,7 @@ See [React Client](/docs/ReactClient.md) for more details.
 See the [React Router tutorial](https://github.com/reactjs/react-router-tutorial) for 14 lessons on how to use react-router with react.
 
 ## Additional information
+
 *[React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example)
 *[Hapi React Starter Kit](https://github.com/Dindaleon/hapi-react-starter-kit)
 *[JWT](https://jwt.io/)
@@ -98,7 +99,7 @@ See the [React Router tutorial](https://github.com/reactjs/react-router-tutorial
 ##Todo
 * [ ] Redux implementation
 * [ ] Redis session management
-* [ ] API Authentication scheme
+* [x] API Authentication scheme
 * [ ] React/Bootstrap components
 * [ ] Testing modules
 * [ ] Documentation

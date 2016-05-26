@@ -1,0 +1,11 @@
+{
+  "name": "db",
+  "version": "0.0.1",
+  "description": "DB Massive Hapi plugin",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leonard Hong <Leonard.Hong@gmail.com>",
+  "license": "BSD"
+}

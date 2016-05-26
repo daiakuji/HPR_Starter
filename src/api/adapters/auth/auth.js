@@ -1,4 +1,4 @@
-var routes = require('./authRoutes');
+var routes = require('./../../routes/authRoutes');
 //var EXPIRATION = 14 * 24 * 60 * 60 * 1000; //Two Weeks
 var EXPIRATION = 100; //For testing
 
@@ -12,7 +12,7 @@ exports.register = function(server, options, next) {
 			server.auth.strategy('jwt','jwt',true,
 			{
 				key:process.env.JWT_SECRET,
-				validateFunc: require('./../lib/jwt2_validate_func'),
+				validateFunc: require('./../../lib/jwt2_validate_func'),
 				verifyOptions: { 
 					algorithms: [ 'HS256' ],
 					ignoreExpiration:true 
