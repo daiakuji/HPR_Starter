@@ -8,8 +8,9 @@ module.exports = [
 		handler: indexHandler.getUserList,
 		config: {
 			//Dev Only
-			auth: 'jwt', 
-
+			//auth: 'jwt', 
+			auth: false,
+			cors: true,
 			// Include this API in swagger documentation
 			tags: ['api'],
 			description: 'Get whole user list',
@@ -23,7 +24,7 @@ module.exports = [
 		config: {
 			//Dev Only
 			auth: false,
-
+			cors: true,
 			// Include this API in swagger documentation
 			tags: ['api'],
 			description: 'Get a user',
@@ -36,5 +37,32 @@ module.exports = [
 				}
 			}				
 		}		
+	},
+	{
+		path: "/modifyUser",
+		method: "POST",
+		handler: indexHandler.modifyUser,
+		config: {
+			//Dev Only
+			//auth: 'jwt', 
+			auth: false,
+			cors: true,
+			// Include this API in swagger documentation
+			tags: ['api'],
+			description: 'Add or Modify a user',
+			notes: 'Adds a new user or modifies an existing user',
+			validate: {
+				payload: {
+					name: Joi.string()
+					.min(1)
+					.required(),
+					email: Joi.string()
+					.email(),
+					password: Joi.string()
+					.min(1)
+					.required()
+				}
+			}			
+		}
 	}
 ];

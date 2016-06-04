@@ -1,5 +1,4 @@
 //Load Modules
-require ('env2')('./config/env.json'); 
 import Hapi from 'hapi';
 import path from 'path';
 import P from 'bluebird';
@@ -18,14 +17,11 @@ import {Provider} from 'react-redux'
 module.exports = makeServer;
 
 // Create the server
-function makeServer() {
+function makeServer(config) {
 	
 	return P.resolve().then(function(){
 		var server = new Hapi.Server({});
-		server.connection({
-			host: process.env.ServerHost || "localhost",
-			port: process.env.ServerPort || 8080
-			});
+		server.connection(config.connection);
 		
 		var plugins = require('./../adapters/plugins');
 		

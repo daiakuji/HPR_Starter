@@ -1,5 +1,4 @@
 //Load Modules
-require('env2')('./../../config/env.json'); 
 var Hapi = require('hapi');
 var path = require('path');
 var P = require('bluebird');
@@ -9,7 +8,7 @@ var P = require('bluebird');
 module.exports = makeServer;
 
 // Create the server
-function makeServer() {
+function makeServer(config) {
 	
 	return P.resolve().then(function(){
 		var server = new Hapi.Server({
@@ -19,10 +18,7 @@ function makeServer() {
 			//router
 			//routes
 		});
-		server.connection({
-			host: process.env.APIHost || "localhost",
-			port: process.env.APIPort || 8080
-			});
+		server.connection(config.connection);
 		
 		server.stamp = require("./stamp")();
 		
@@ -34,7 +30,9 @@ function makeServer() {
 				return reply.continue();
 			});
 		  }).then(function() {
-			return P.promisify(server.start, {context: server})();
+			return P.promisify(server.start, {context: server})(()=>{
+				console.info(`Server started at ${ server.info.uri }`);	
+			});
 		  }).then(function() {
 			return server;
 		  });

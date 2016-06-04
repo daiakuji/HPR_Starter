@@ -140,6 +140,40 @@ One method to establish the database connection to be used with the routes, is t
 
 From there, the routes within the context can reference the (`db`) object by simply using (`this.db`). 
 
+## DB Plugin
+---
+If you are not using Postgres or Massive, the connection string and required packagse can be modified in the (`src\api\adapters\db`) folder. The server bindings can be changed to whatever variable is required for the routes to access the database connection pool.
+
+For example, if you are using MongoDB+Mongoose:
+```
+// single server
+var uri = 'mongodb://localhost/test';
+mongoose.createConnection(uri, { server: { poolSize: 4 }});
+
+//Declare the models
+var Cat = mongoose.model('Cat', { name: String });
+
+server.bind({
+		cat: Cat
+	});
+```
+
+Then in your route handler:
+```
+//Hard coding. Kitty is the return object or successful response
+Cat.create({ name: 'Zildjian' },function (err, kitty) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(kitty);
+  }
+});
+//Getting a parameter from the Route
+Cat.create({ name: req.params.name});
+//Or your front end creates a Cat payload, then you pass the JSON object in to be created
+Cat.create(req.payload)
+```
+
 ## Authentication
 ---
 Authentication uses a combination of JWT and cookies. This project also utilises [bell](https://github.com/hapijs/bell) to authenticate users with existing social network profiles.

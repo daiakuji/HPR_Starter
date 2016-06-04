@@ -1,12 +1,18 @@
+var moment = require('moment')
+
+var apiConn = process.env.APIHost+':'+process.env.APIPort
+var filename = moment().format("YYYYMMDDhhmmss")
+
 module.exports = [
-  {
+ /* {
     register: require('crumb'),
     options: {
-      cookieOptions: {
-        isSecure: true
-      }
+		restful: true,
+		cookieOptions: {
+		isSecure: false
+		}
     }
-  },
+  },*/
   {
 	register: require('hapi-swagger'),
 	options: {
@@ -19,7 +25,7 @@ module.exports = [
 			}
 		},
 		schemes: ['http'],
-		host: process.env.ServerHost+':'+process.env.ServerPort			
+		host: apiConn
 	
 	}
   },
@@ -29,5 +35,45 @@ module.exports = [
   require('bell'),
   require('./auth/auth'),
   require('vision'),
-  require('./db/db')
+  require('./db/db'),
+    {
+	register: require('good'),
+	    options: {
+		ops: {
+			interval: 1000
+		},
+		reporters: {
+			console: [{
+				module: 'good-squeeze',
+				name: 'Squeeze',
+				args: [{ log: '*', response: '*' }]
+			}, {
+				module: 'good-console'
+			}, 'stdout'],
+			file: [{
+				module: 'good-squeeze',
+				name: 'Squeeze',
+				args: [{ ops:'*',error:'*',log: '*', response: '*' }]
+			}, {
+				module: 'good-squeeze',
+				name: 'SafeJson'
+			}, {
+				module: 'good-file',
+				args: ['./../../logs/'+filename+'.log']
+			}],
+			http: [{
+				module: 'good-squeeze',
+				name: 'Squeeze',
+				args: [{ error: '*' }]
+			}, {
+				module: 'good-http',
+				args: ['http://'+apiConn+'/logs', {
+					wreck: {
+						headers: { 'x-api-key': 12345 }
+					}
+				}]
+			}]
+		}
+    }	
+  }
 ];
