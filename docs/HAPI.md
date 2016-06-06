@@ -142,7 +142,7 @@ From there, the routes within the context can reference the (`db`) object by sim
 
 ## DB Plugin
 ---
-If you are not using Postgres or Massive, the connection string and required packagse can be modified in the (`src\api\adapters\db`) folder. The server bindings can be changed to whatever variable is required for the routes to access the database connection pool.
+If you are not using Postgres or Massive, the connection string and required packages can be modified in the (`src\api\adapters\db`) folder. The server bindings can be changed to whatever variable is required for the routes to access the database connection pool.
 
 For example, if you are using MongoDB+Mongoose:
 ```

@@ -1,0 +1,148 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>React Tutorial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+	var UserBox = React.createClass({
+		getInitialState: function() {
+			return {data: []};
+		},
+		loadUsersFromServer: function() {
+			$.ajax({
+				url: this.props.url,
+				dataType: 'json',
+				cache:false,
+				success: function(data){
+					this.setState({data: data});
+				}.bind(this),
+				error: function(xhr, status, err){
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			})
+		},
+		componentDidMount: function() {
+			this.loadUsersFromServer();
+			setInterval(this.loadUsersFromServer, this.props.pollInterval)
+		},
+		render: function() {
+			return (
+				<div className="userBox">
+				<UserList data={this.state.data}/>
+				<UserForm url="http://localhost:3001/modifyUser"/>
+				</div>
+			);
+		}
+	});	
+	var User = React.createClass({
+		render: function(){
+		return(
+			<div className="user" data-id={this.props.id}>
+				<input type="text" defaultValue={this.props.name}/>
+				<input type="text" defaultValue={this.props.email} />
+				<input type="checkbox" ref="isActive" checked={this.props.isActive} />
+			</div>
+		);
+		}
+	
+	});
+	var UserList = React.createClass({
+		render: function(){
+			var userNodes = this.props.data.map( function(user) {
+					return (
+					<User key={user.id} id={user.id} name={user.name} email={user.email} isActive={user.isActive}>
+					
+					</User>
+				);
+			});
+			return (
+				<div className="userList">
+				{userNodes}
+				</div>
+			);
+		}
+	});
+	var UserForm = React.createClass({
+		getInitialState: function(){
+			return {name: '', email: '', password: '', isActive:false};
+		},
+		handleNameChange: function(e){
+			this.setState({name: e.target.value});
+		},
+		handleEmailChange: function(e){
+			this.setState({email: e.target.value});
+		},
+		handleActiveChange: function(e){
+			this.setState({isActive: e.target.checked});
+		},
+		handlePasswordChange: function(e){
+			this.setState({password: e.target.value});
+		},		
+		handleSubmit: function(e){
+			e.preventDefault();
+			var name = this.state.name.trim();
+			var email = this.state.email.trim();
+			var password = this.state.password.trim();
+			if(!name||!email) {
+				return;
+			};
+			
+			var newUser = {
+				name: name,
+				email: email,
+				password: password
+			}
+			
+			$.ajax({
+				type: "PUT",
+				url: this.props.url,
+				data: newUser,
+				success: this.handleSubmitSuccess,
+				error: this.handleSubmitFailure,
+				dataType: 'json'
+			});
+		
+		this.setState({name: '', email: '',  password: '', isActive:false});
+		},
+		handleSubmitSuccess: function(data){
+			if(data.status == 'ok') {
+			}
+			else{
+			}
+		},
+		handleSubmitFailure: function(xhr, ajaxOptions, thrownError){
+			alert(xhr.status);
+			alert(thrownError);
+		},		
+		render: function(){
+			return(
+				<div className="userForm">
+				<form className="userForm" onSubmit={this.handleSubmit}>
+					<input type="text" placeholder="Your name" value={this.state.name} onChange={this.handleNameChange}/>
+					<input type="text" placeholder="Say something..." value={this.state.email} onChange={this.handleEmailChange}/>
+					<input type="password" ref="password" placeholder="Secret Squirrel..." onChange={this.handlePasswordChange}/>
+					<input type="checkbox" ref="isActive" checked={this.state.isActive} onChange={this.handleActiveChange} />
+					<input type="submit" value="Post" />
+				</form>								
+				</div>
+			);
+		}
+	});
+	
+	ReactDOM.render(
+	<UserBox url="http://localhost:3001/user" pollInterval={2000000} />,
+
+	document.getElementById('content')
+	);    
+</script>
+  </body>
+</html>

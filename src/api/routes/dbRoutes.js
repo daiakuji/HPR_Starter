@@ -40,7 +40,7 @@ module.exports = [
 	},
 	{
 		path: "/modifyUser",
-		method: "POST",
+		method: ["PUT"],
 		handler: indexHandler.modifyUser,
 		config: {
 			//Dev Only

@@ -6,10 +6,9 @@ var connectionString = "postgres://"+process.env.DBuser+":"+process.env.DBpasswo
 
 exports.register = function(server, options, next) {
 	var db = massive.connectSync({connectionString : connectionString});
-
-	server.bind({
-		db: db
-	});
+	
+	//Set the db object in the app internals http://hapijs.com/api#serverapp
+	server.app.db = db;
 	
 	server.route(routes);
 	next();

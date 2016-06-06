@@ -33,9 +33,9 @@ module.exports = [
   require('inert'),
   require('hapi-auth-jwt2'),
   require('bell'),
-  require('./auth/auth'),
   require('vision'),
   require('./db/db'),
+  require('./auth/auth'),
     {
 	register: require('good'),
 	    options: {
