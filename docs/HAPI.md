@@ -236,6 +236,10 @@ Then set up a route for the users to log in via the client
 
 In the case of this project, once the user is authenticated via the third party system, we create a JWT and set it to the cookie.
 
+### SSL/TLS
+
+[Setting up SSL/TLS on HAPI](/docs/HapiSSR.md)
+
 ##Todo
 * [x] Start up
 * [x] Massive CRUD

@@ -11,15 +11,16 @@ module.exports = makeServer;
 function makeServer(config) {
 	
 	return P.resolve().then(function(){
-		var server = new Hapi.Server({
+		var server = new Hapi.Server(
 			// Future implementation for redis
 			//cache
 			//connections
 			//router
 			//routes
-		});
-		server.connection(config.connection);
-		
+		);
+server.connection(config.connection);
+
+//	server.connection(config.connection,config.tls)
 		server.stamp = require("./stamp")();
 		
 		var plugins = require('./../adapters/plugins');
@@ -31,7 +32,8 @@ function makeServer(config) {
 			});
 		  }).then(function() {
 			return P.promisify(server.start, {context: server})(()=>{
-				console.info(`Server started at ${ server.info.uri }`);	
+		console.log(server.info	);
+				//console.info(`Server started at ${ server.info.uri }`);	
 			});
 		  }).then(function() {
 			return server;

@@ -15,7 +15,17 @@
     <script type="text/babel">
 	var UserBox = React.createClass({
 		getInitialState: function() {
-			return {data: []};
+			return {
+				data: [],
+				filterText: '',
+				isActiveOnly: false
+			};
+		},
+		handleUserInput: function(filterText, isActiveOnly) {
+			this.setState({
+				filterText:	filterText,
+				isActiveOnly: isActiveOnly
+			});
 		},
 		loadUsersFromServer: function() {
 			$.ajax({
@@ -32,12 +42,21 @@
 		},
 		componentDidMount: function() {
 			this.loadUsersFromServer();
-			setInterval(this.loadUsersFromServer, this.props.pollInterval)
+			//setInterval(this.loadUsersFromServer, this.props.pollInterval)
 		},
 		render: function() {
 			return (
 				<div className="userBox">
-				<UserList data={this.state.data}/>
+				<SearchForm 
+					filterText={this.state.filterText}
+					isActiveOnly={this.state.isActiveOnly}
+					onUserInput={this.handleUserInput}
+				/>
+				<UserList 
+					data={this.state.data}
+					filterText={this.state.filterText}
+					isActiveOnly={this.state.isActiveOnly}
+				/>
 				<UserForm url="http://localhost:3001/modifyUser"/>
 				</div>
 			);
@@ -58,12 +77,17 @@
 	var UserList = React.createClass({
 		render: function(){
 			var userNodes = this.props.data.map( function(user) {
+					if((user.name.indexOf(this.props.filterText) === -1) || (!user.isActive && this.props.isActiveOnly))
+					{
+						return;
+					}
+					
 					return (
 					<User key={user.id} id={user.id} name={user.name} email={user.email} isActive={user.isActive}>
 					
 					</User>
 				);
-			});
+			}.bind(this));
 			return (
 				<div className="userList">
 				{userNodes}
@@ -71,6 +95,24 @@
 			);
 		}
 	});
+	
+	var SearchForm = React.createClass({
+		handleChange: function() {
+			this.props.onUserInput(
+				this.refs.filterTextInput.value,
+				this.refs.showActiveOnlyInput.checked
+			);
+		},
+		render: function() {
+			return(
+				<form>
+					<input type="text" ref="filterTextInput" placeholder="Filter users" value={this.props.filterText} onChange={this.handleChange}/>
+					<input type="checkbox" ref="showActiveOnlyInput" checked={this.props.showActiveOnly} onChange={this.handleChange}/> Only Show Active
+				</form>
+			)
+		}
+	});
+	
 	var UserForm = React.createClass({
 		getInitialState: function(){
 			return {name: '', email: '', password: '', isActive:false};
@@ -111,10 +153,10 @@
 				dataType: 'json'
 			});
 		
-		this.setState({name: '', email: '',  password: '', isActive:false});
 		},
 		handleSubmitSuccess: function(data){
 			if(data.status == 'ok') {
+				this.setState({name: '', email: '',  password: '', isActive:false});	
 			}
 			else{
 			}

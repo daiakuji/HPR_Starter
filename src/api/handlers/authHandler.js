@@ -6,9 +6,9 @@ var Crypto = require('crypto');
 var EXPIRATION = 100; //For testing
 
 //Create the cipher object
-var decipher = Crypto.createDecipher('sha256',process.env.JWT_SECRET) 
+//var decipher = Crypto.createDecipher('sha256',process.env.JWT_SECRET) 
 //Create the decipher object
-var cipher = Crypto.createCipher('sha256',process.env.JWT_SECRET)
+//var cipher = Crypto.createCipher('sha256',process.env.JWT_SECRET)
 
 var internals = {};
 
@@ -133,14 +133,15 @@ internals.inactivateUser = function(request, reply) {
 		else
 		{
 			//The user doesn't exist or is already inactive
+		
 		}
-	}
+	});
 }
 
 // Method Name: deleteUser
 // Description: Function to remove a user's profile from the database
 internals.deleteUser = function(request, reply) {
-	request.server.app.db.people.destroy({{id: request.payload.id}, function(err, res) {
+	request.server.app.db.people.destroy({id: request.payload.id}, function(err, res) {
 		if(!err)
 		{}
 		else

@@ -21,6 +21,7 @@ function makeServer(config) {
 	
 	return P.resolve().then(function(){
 		var server = new Hapi.Server({});
+		
 		server.connection(config.connection);
 		
 		var plugins = require('./../adapters/plugins');
